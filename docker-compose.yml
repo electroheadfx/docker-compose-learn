@@ -1,0 +1,24 @@
+services:
+  app:
+    build: .
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://user:pass@postgres:5432/db
+    ports:
+      - "3000:8080"
+
+  postgres:
+    # connect to database postgres @ localhost:5432 on pg_db Database with user: efx, pass: 1234
+    image: postgres:alpine
+    environment:
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: pg_db
+      POSTGRES_USER: efx
+    ports:
+      - "5432:5432"
+    volumes:
+      - volumePgData:/var/lib/postgresql/data
+
+volumes:
+  volumePgData:
